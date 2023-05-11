@@ -48,3 +48,6 @@
     - apiGroups: ["addon.open-cluster-management.io"]
       resources: ["addondeploymentconfigs"]
       verbs: ["get", "list", "watch"]
+    - apiGroups: ["addon.open-cluster-management.io"]
+      resources: ["addonhubconfigs"]
+      verbs: ["get", "list", "watch"]

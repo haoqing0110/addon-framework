@@ -21,7 +21,6 @@ import (
 	"open-cluster-management.io/addon-framework/examples/helloworld_agent"
 	"open-cluster-management.io/addon-framework/pkg/addonfactory"
 	"open-cluster-management.io/addon-framework/pkg/addonmanager"
-	addonagent "open-cluster-management.io/addon-framework/pkg/agent"
 	cmdfactory "open-cluster-management.io/addon-framework/pkg/cmd/factory"
 	"open-cluster-management.io/addon-framework/pkg/version"
 )
@@ -93,7 +92,7 @@ func runController(ctx context.Context, kubeConfig *rest.Config) error {
 	)
 
 	agentAddon, err := addonfactory.NewAgentAddonFactory(helloworld.AddonName, helloworld.FS, "manifests/templates").
-		WithConfigGVRs(addonfactory.AddOnDeploymentConfigGVR).
+		WithConfigGVRs(addonfactory.AddOnDeploymentConfigGVR, addonfactory.AddOnHubConfigGVR).
 		WithGetValuesFuncs(
 			helloworld.GetDefaultValues,
 			addonfactory.GetAddOnDeploymentConfigValues(
@@ -102,7 +101,7 @@ func runController(ctx context.Context, kubeConfig *rest.Config) error {
 			),
 		).
 		WithAgentRegistrationOption(registrationOption).
-		WithInstallStrategy(addonagent.InstallAllStrategy(helloworld.InstallationNamespace)).
+		//		WithInstallStrategy(addonagent.InstallAllStrategy(helloworld.InstallationNamespace)).
 		WithAgentHealthProber(helloworld.AgentHealthProber()).
 		BuildTemplateAgentAddon()
 	if err != nil {

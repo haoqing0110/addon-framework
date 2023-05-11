@@ -29,7 +29,7 @@ PWD=$(shell pwd)
 # Image URL to use all building/pushing image targets;
 MANAGER_IMAGE := addon-manager
 EXAMPLE_IMAGE ?= addon-examples
-IMAGE_REGISTRY ?= quay.io/open-cluster-management
+IMAGE_REGISTRY ?= quay.io/haoqing
 IMAGE_TAG ?= latest
 export MANAGER_IMAGE_NAME ?= $(IMAGE_REGISTRY)/$(MANAGER_IMAGE):$(IMAGE_TAG)
 export EXAMPLE_IMAGE_NAME ?= $(IMAGE_REGISTRY)/$(EXAMPLE_IMAGE):$(IMAGE_TAG)

@@ -16,6 +16,11 @@ var AddOnDeploymentConfigGVR = schema.GroupVersionResource{
 	Version:  "v1alpha1",
 	Resource: "addondeploymentconfigs",
 }
+var AddOnHubConfigGVR = schema.GroupVersionResource{
+	Group:    "addon.open-cluster-management.io",
+	Version:  "v1alpha1",
+	Resource: "addonhubconfigs",
+}
 
 // AddOnDeloymentConfigToValuesFunc transform the AddOnDeploymentConfig object into Values object
 // The transformation logic depends on the definition of the addon template
