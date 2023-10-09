@@ -13,14 +13,6 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/cache"
-	addonv1alpha1 "open-cluster-management.io/api/addon/v1alpha1"
-	addonv1alpha1client "open-cluster-management.io/api/client/addon/clientset/versioned"
-	addoninformers "open-cluster-management.io/api/client/addon/informers/externalversions"
-	clusterv1client "open-cluster-management.io/api/client/cluster/clientset/versioned"
-	clusterv1informers "open-cluster-management.io/api/client/cluster/informers/externalversions"
-	workv1client "open-cluster-management.io/api/client/work/clientset/versioned"
-	workv1informers "open-cluster-management.io/api/client/work/informers/externalversions"
-
 	"open-cluster-management.io/addon-framework/pkg/addonmanager/controllers/addonconfig"
 	"open-cluster-management.io/addon-framework/pkg/addonmanager/controllers/addoninstall"
 	"open-cluster-management.io/addon-framework/pkg/addonmanager/controllers/agentdeploy"
@@ -30,9 +22,15 @@ import (
 	"open-cluster-management.io/addon-framework/pkg/agent"
 	"open-cluster-management.io/addon-framework/pkg/basecontroller/factory"
 	"open-cluster-management.io/addon-framework/pkg/index"
-	"open-cluster-management.io/addon-framework/pkg/manager/controllers/addonconfiguration"
 	"open-cluster-management.io/addon-framework/pkg/manager/controllers/addonowner"
 	"open-cluster-management.io/addon-framework/pkg/utils"
+	addonv1alpha1 "open-cluster-management.io/api/addon/v1alpha1"
+	addonv1alpha1client "open-cluster-management.io/api/client/addon/clientset/versioned"
+	addoninformers "open-cluster-management.io/api/client/addon/informers/externalversions"
+	clusterv1client "open-cluster-management.io/api/client/cluster/clientset/versioned"
+	clusterv1informers "open-cluster-management.io/api/client/cluster/informers/externalversions"
+	workv1client "open-cluster-management.io/api/client/work/clientset/versioned"
+	workv1informers "open-cluster-management.io/api/client/work/informers/externalversions"
 )
 
 // AddonManager is the interface to initialize a manager on hub to manage the addon
@@ -272,17 +270,6 @@ func (a *addonManager) StartWithInformers(ctx context.Context,
 			dynamicInformers,
 			a.addonConfigs,
 			utils.FilterByAddonName(a.addonAgents),
-		)
-
-		// start addonConfiguration controller, note this is to handle the case when the general addon-manager
-		// is not started, we should consider to remove this when the general addon-manager are always started.
-		// This controller will also ignore the installStrategy part.
-		addonConfigurationController = addonconfiguration.NewAddonConfigurationController(
-			addonClient,
-			addonInformers.Addon().V1alpha1().ManagedClusterAddOns(),
-			addonInformers.Addon().V1alpha1().ClusterManagementAddOns(),
-			nil, nil,
-			utils.ManagedBySelf(a.addonAgents),
 		)
 	}
 
