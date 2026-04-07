@@ -68,6 +68,7 @@ func (a *v1alpha1Adapter) GetAgentAddonOptions() AgentAddonOptions {
 	manifestConfigs = append(manifestConfigs, opts.ManifestConfigs...)
 
 	cfg := AgentAddonOptions{
+		AddonName:                       opts.AddonName,
 		SupportedConfigGVRs:             opts.SupportedConfigGVRs,
 		ManifestConfigs:                 manifestConfigs,
 		AgentDeployTriggerClusterFilter: opts.AgentDeployTriggerClusterFilter,
